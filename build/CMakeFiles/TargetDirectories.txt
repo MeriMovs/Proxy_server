@@ -1,0 +1,7 @@
+/home/mermovs/projects/Proxy_server/build/CMakeFiles/proxy_server.dir
+/home/mermovs/projects/Proxy_server/build/CMakeFiles/edit_cache.dir
+/home/mermovs/projects/Proxy_server/build/CMakeFiles/rebuild_cache.dir
+/home/mermovs/projects/Proxy_server/build/CMakeFiles/list_install_components.dir
+/home/mermovs/projects/Proxy_server/build/CMakeFiles/install.dir
+/home/mermovs/projects/Proxy_server/build/CMakeFiles/install/local.dir
+/home/mermovs/projects/Proxy_server/build/CMakeFiles/install/strip.dir

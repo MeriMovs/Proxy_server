@@ -1,0 +1,30 @@
+# HTTPS Proxy Blocklist
+# ---------------------
+# Format:
+#   domain.com           — blocks all requests to this exact domain
+#   domain.com/path      — blocks requests whose URL path starts with /path
+#
+# Lines starting with '#' are comments. Blank lines are ignored.
+# Domain matching is case-insensitive.
+
+# --- Advertising & tracking networks ---
+ads.example.com
+doubleclick.net
+googlesyndication.com
+adservice.google.com
+tracking.example.net
+
+# --- Malware / phishing (example entries) ---
+malware-example.net
+phishing-demo.com
+
+# --- URL-prefix examples ---
+# Block only the /ads sub-path on a specific host
+cdn.example.com/ads
+# Block banner directory on an otherwise allowed host
+static.example.org/banners
+
+# --- Social media (example — uncomment to enable) ---
+# facebook.com
+# twitter.com
+# instagram.com
