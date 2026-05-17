@@ -52,7 +52,6 @@ private:
 
 #include <openssl/err.h>
 
-#include <arpa/inet.h>
 #include <netdb.h>
 #include <poll.h>
 #include <sys/socket.h>
@@ -154,8 +153,7 @@ bool Connection::read_connect_request() {
         host_ = host_port; port_ = 443;
     } else {
         host_ = host_port.substr(0, colon);
-        try { port_ = static_cast<uint16_t>(std::stoi(host_port.substr(colon + 1))); }
-        catch (...) { port_ = 443; }
+        port_ = static_cast<uint16_t>(std::stoi(host_port.substr(colon + 1)));
     }
     std::string header_line;
     while (read_line(client_fd_, header_line, 4096))
@@ -220,16 +218,13 @@ bool Connection::read_http_request() {
 }
 
 void Connection::relay() {
-    if (!ssl_write_all(upstream_ssl_, req_buf_.c_str(), req_buf_.size())) {
-        LOG("Failed to forward request headers to " << host_);
-        return;
-    }
+    ssl_write_all(upstream_ssl_, req_buf_.c_str(), req_buf_.size());
     uint64_t bytes = ssl_relay(client_ssl_, upstream_ssl_) + req_buf_.size();
     stats_.record_request(host_, bytes, false);
 }
 
 void Connection::send_error(int status_code, const char* status_text, const char* body) {
-    const std::string b = body ? body : "";
+    const std::string b = body;
     const std::string resp =
         "HTTP/1.1 " + std::to_string(status_code) + " " + status_text +
         "\r\nContent-Type: text/plain\r\nContent-Length: " + std::to_string(b.size()) +

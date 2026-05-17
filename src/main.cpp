@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
 
     std::cerr << "\n[main] Shutdown signal received — stopping proxy...\n";
     server.stop();
-    if (server_thread.joinable()) server_thread.join();
+    server_thread.join();
     std::cerr << "[main] Proxy stopped cleanly.\n";
     return 0;
 }
