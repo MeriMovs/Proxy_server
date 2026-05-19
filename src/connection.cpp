@@ -108,6 +108,18 @@ void Connection::handle() {
     struct Guard { Stats& s; ~Guard() { --s.active_connections; } } _guard{stats_};
 
     if (!read_connect_request()) return;
+
+    if (blocker_.is_blocked(host_, "/")) {
+        LOG("Blocked (CONNECT): " << client_ip_ << " -> " << host_);
+        constexpr char resp[] =
+            "HTTP/1.1 403 Forbidden\r\nContent-Type: text/plain\r\n"
+            "Content-Length: 34\r\nConnection: close\r\n\r\n"
+            "This site is blocked by the proxy.";
+        write_all(client_fd_, resp, sizeof(resp) - 1);
+        stats_.record_request(host_, 0, true);
+        return;
+    }
+
     if (!send_connect_ok())      return;
     if (!ssl_handshake_client()) return;
 

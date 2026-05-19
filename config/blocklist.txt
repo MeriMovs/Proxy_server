@@ -25,6 +25,6 @@ cdn.example.com/ads
 static.example.org/banners
 
 # --- Social media (example — uncomment to enable) ---
-# facebook.com
-# twitter.com
-# instagram.com
+ facebook.com
+ twitter.com
+ instagram.com

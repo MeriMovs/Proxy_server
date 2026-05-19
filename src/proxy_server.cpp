@@ -124,7 +124,7 @@ void ProxyServer::proxy_accept_loop() {
         int fd = ::accept(proxy_listen_fd_, reinterpret_cast<struct sockaddr*>(&addr), &len);
         if (fd < 0) { if (!running_) break; continue; }
         std::string ip = peer_ip(addr);
-        pool_.submit([fd, ip, &ssl = ssl_ctx_, &bl = blocker_, &st = stats_]() mutable {
+        pool_.submit([fd, ip, &ssl = ssl_ctx_, &bl = f, &st = stats_]() mutable {
             Connection conn(fd, std::move(ip), ssl, bl, st);
             conn.handle();
         });
